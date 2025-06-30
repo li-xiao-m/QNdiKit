@@ -1,0 +1,18 @@
+# QNdiKitConfig.cmake.in - QNdiKit 配置文件模板
+#
+# 这个文件会在安装时被配置，用于其他项目通过 find_package(QNdiKit) 使用
+
+@PACKAGE_INIT@
+
+# 先自动 include findndi.cmake（本目录）
+include("${CMAKE_CURRENT_LIST_DIR}/findndi.cmake")
+
+# 包含 QNdiKit 目标
+include("${CMAKE_CURRENT_LIST_DIR}/QNdiKitTargets.cmake")
+
+# 设置 QNdiKit 变量
+set(QNdiKit_VERSION "@PROJECT_VERSION@")
+set(QNdiKit_INCLUDE_DIRS "@PACKAGE_INCLUDE_INSTALL_DIR@")
+
+# 检查并报告状态
+check_required_components(QNdiKit) 

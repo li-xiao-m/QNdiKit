@@ -1,0 +1,12 @@
+#ifndef QNDISOURCECORE_GLOBAL_H
+#define QNDISOURCECORE_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(QNDISOURCE_EXPORTS)
+#  define QNDISOURCE_EXPORT Q_DECL_EXPORT
+#else
+#  define QNDISOURCE_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // QNDISOURCECORE_GLOBAL_H 

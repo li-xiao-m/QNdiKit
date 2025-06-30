@@ -1,0 +1,7 @@
+本项目集成了 NDI SDK。
+
+NDI 是 NewTek, Inc. 的注册商标。
+
+NDI SDK 受 NewTek 官方授权协议保护，详情请参见 https://www.ndi.tv/sdk/
+
+使用本项目时请遵守 NDI SDK 官方授权协议。 

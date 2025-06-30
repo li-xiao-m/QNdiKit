@@ -1,0 +1,7 @@
+本项目部分代码基于 Qt 框架开发。
+
+Qt 是 The Qt Company Ltd. 及其贡献者的注册商标。
+
+Qt 框架受 LGPL、GPL 或商业授权协议保护，详情请参见 https://www.qt.io/
+
+使用本项目时请遵守 Qt 官方授权协议。 
