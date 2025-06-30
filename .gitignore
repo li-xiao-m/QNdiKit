@@ -15,8 +15,8 @@ CMakeFiles/
 cmake_install.cmake
 Makefile
 *.cmake
-!CMakeLists.txt
 !*.cmake.in
+!/cmake/*.cmake
 
 # Compiled Object files
 *.slo
