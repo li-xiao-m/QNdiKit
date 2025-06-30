@@ -14,7 +14,7 @@ elseif(NOT DEFINED CMAKE_INSTALL_PREFIX)
     if(WIN32)
         set(CMAKE_INSTALL_PREFIX "D:/Program Files/QNdiKit")
     else()
-        set(CMAKE_INSTALL_PREFIX "/usr/local")
+        set(CMAKE_INSTALL_PREFIX "/usr/local") 
     endif()
 endif()
 
