@@ -11,19 +11,26 @@ else()
     add_library(${TARGET_NAME} SHARED ${SOURCES} ${HEADERS})
 endif()
 
+set_target_properties(${TARGET_NAME} PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tmp
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out
+)
+
 # 设置目标属性
 set_target_properties(${TARGET_NAME} PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
     OUTPUT_NAME "QNdiManagerCore"
     DEFINE_SYMBOL QNDIMANAGERCORE_EXPORTS
-    AUTOMOC ON
+    AUTOMOC ON 
 )
 
 # 链接依赖 - 只链接必要的依赖
 target_link_libraries(${TARGET_NAME} 
     PUBLIC
         Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Qml
         NDI::NDI
 )
 

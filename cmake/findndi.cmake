@@ -186,6 +186,25 @@ if(NDI_FOUND)
     message(STATUS "  - 版本: ${NDI_VERSION}")
     message(STATUS "  - 头文件: ${NDI_INCLUDE_DIR}")
     message(STATUS "  - 库文件: ${NDI_LIBRARY}")
+
+    if(NDI_FOUND AND WIN32)
+        if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+            execute_process(
+                COMMAND ${CMAKE_COMMAND} -E copy_directory
+                    "${NDI_SDK_ROOT}/Bin/x64" "${CMAKE_BINARY_DIR}/out"
+                RESULT_VARIABLE copy_result
+            )
+        else()
+            execute_process(
+                COMMAND ${CMAKE_COMMAND} -E copy_directory
+                    "${NDI_SDK_ROOT}/Bin/x86" "${CMAKE_BINARY_DIR}/out"
+                RESULT_VARIABLE copy_result
+            )
+        endif()
+        if(NOT copy_result EQUAL 0)
+            message(WARNING "NDI Bin 拷贝失败！")
+        endif()
+    endif()
 endif()
 
 # 标记为高级变量

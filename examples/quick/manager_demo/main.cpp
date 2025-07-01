@@ -5,12 +5,14 @@
 #include <QtCore/QUrl>
 #include <QtCore/QDir>
 #include "qndimanagerquickitem.h"
+#include "managercoreregister.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
     
     QQmlApplicationEngine engine;
+    QNK::Manager::registerType(&engine);
     
     // 注册C++类型到QML
     qmlRegisterType<QNdiManagerQuickItem>("QNdiKit", 1, 0, "NdiManagerItem");

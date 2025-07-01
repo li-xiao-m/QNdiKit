@@ -1,4 +1,7 @@
 add_executable(QNdiSourceWidgetsDemo main.cpp)
+set_target_properties(QNdiSourceWidgetsDemo PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out
+)
 
 # 查找必要的依赖包
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets)

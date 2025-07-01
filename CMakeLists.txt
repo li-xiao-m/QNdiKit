@@ -2,11 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 
 project(QNdiKit VERSION 0.1 LANGUAGES CXX)
 
-# 统一设置所有目标产物输出到 build/out
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tmp)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
-
 # 安装路径配置
 if(DEFINED QNdiKit_INSTALL_PREFIX)
     set(CMAKE_INSTALL_PREFIX "${QNdiKit_INSTALL_PREFIX}")
@@ -15,13 +10,13 @@ elseif(NOT DEFINED CMAKE_INSTALL_PREFIX)
         set(CMAKE_INSTALL_PREFIX "D:/Program Files/QNdiKit")
     else()
         set(CMAKE_INSTALL_PREFIX "/usr/local") 
-    endif()
-endif()
-
+    endif() 
+endif() 
+  
 if(NOT DEFINED CMAKE_BUILD_TYPE AND NOT DEFINED CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
-
+ 
 if(LINUX AND NOT CMAKE_CROSSCOMPILING)
     set(CMAKE_INSTALL_RPATH "$ORIGIN")
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH OFF)
@@ -59,7 +54,7 @@ endif()
 
 if(QNdiKit_INSTALL)
     include(GNUInstallDirs)
-    include(CMakePackageConfigHelpers)
+    include(CMakePackageConfigHelpers) 
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")

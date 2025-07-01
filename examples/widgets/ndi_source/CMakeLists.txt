@@ -8,6 +8,10 @@ add_executable(ndi_source_demo
     mainwindow.h
 )
 
+set_target_properties(ndi_source_demo PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out
+)
+
 target_link_libraries(ndi_source_demo
     QNdiKit::SourceCore
     QNdiKit::SourceWidgets

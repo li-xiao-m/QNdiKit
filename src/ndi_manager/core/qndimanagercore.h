@@ -12,11 +12,14 @@ class QNDIMANAGERCORE_EXPORT QNdiManagerCore : public QObject
     Q_OBJECT
 
 public:
-    enum NdiManagerType 
+    enum NdiGeneralType 
     {
-        FindNdiSource
+        FindNdiSource,
+        SwitchNdiSource,
+        PauseNdiSource,
+        ResumeNdiSource
     };
-    Q_ENUM(NdiManagerType)
+    Q_ENUM(NdiGeneralType)
 
     QNdiManagerCore();
     ~QNdiManagerCore();
