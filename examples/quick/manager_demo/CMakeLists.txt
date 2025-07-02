@@ -1,4 +1,7 @@
-add_executable(QNdiManagerQuickDemo main.cpp qml.qrc)
+add_executable(QNdiManagerQuickDemo main.cpp View/qml.qrc
+    Model/NdiSourceInfoModel.h Model/NdiSourceInfoModel.cpp
+    Ctrl/NdiSourceInfoController.h Ctrl/NdiSourceInfoController.cpp
+    Ctrl/CtrlRegister.h)
 set_target_properties(QNdiManagerQuickDemo PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out
 )

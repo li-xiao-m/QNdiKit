@@ -49,11 +49,9 @@ void NdiCpuWorker::handleFindNdiSource(const QNdiManagerCore::NdiGeneralType &ty
     {
         QVariantMap source;
         source["name"] = QString::fromUtf8(p_sources[i].p_ndi_name);
-        source["url_address"] = QString::fromUtf8(p_sources[i].p_url_address);
         source["ip_address"] = QString::fromUtf8(p_sources[i].p_ip_address);
         sources.append(source);
     }
-    qDebug() << "sources: " << sources;
     emit answer(type, sources, true, "NDIlib_find_get_current_sources success");
     QTimer::singleShot(3000, this, [=](){
         this->handle(QNdiManagerCore::FindNdiSource, QVariant());

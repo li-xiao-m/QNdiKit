@@ -2,6 +2,8 @@
 
 [English](../README.md)
 
+**NDI SDK 下载：** [https://ndi.video/for-developers/ndi-sdk/](https://ndi.video/for-developers/ndi-sdk/)
+
 一个基于 Qt 的模块化 NDI 框架，支持 Windows、Linux、macOS 跨平台高效开发 NDI 源和管理器应用。
 
 ## 推荐编译环境
@@ -85,4 +87,11 @@
 
 ---
 
-如遇问题请先确认环境变量、依赖路径和脚本参数，或查阅英文文档获取详细模块与目录说明。 
+如遇问题请先确认环境变量、依赖路径和脚本参数，或查阅英文文档获取详细模块与目录说明。
+
+---
+
+## 已完成工作
+
+- 管理器：已实现NDI源查找功能
+- Quick管理器：已支持在QML/Quick中显示NDI源信息 

@@ -6,6 +6,7 @@
 #include <QtCore/QDir>
 #include "qndimanagerquickitem.h"
 #include "managercoreregister.h"
+#include "Ctrl/CtrlRegister.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
     
     QQmlApplicationEngine engine;
     QNK::Manager::registerType(&engine);
+    Ctrl::registerType(&engine);
     
     // 注册C++类型到QML
     qmlRegisterType<QNdiManagerQuickItem>("QNdiKit", 1, 0, "NdiManagerItem");
