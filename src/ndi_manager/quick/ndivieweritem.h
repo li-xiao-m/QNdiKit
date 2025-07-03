@@ -8,6 +8,7 @@
 #include <QQuickItem>
 #include <QSGNode>
 #include <QThread>
+#include <QSGTexture>
 
 
 namespace QNK {
@@ -37,7 +38,7 @@ signals:
 private:
   QThread *m_thread{nullptr};
   NdiReceiveWorker *m_worker{nullptr};
-  QImage m_image;
+  QSGTexture *m_texture{nullptr};
 };
 } // namespace Manager
 } // namespace QNK

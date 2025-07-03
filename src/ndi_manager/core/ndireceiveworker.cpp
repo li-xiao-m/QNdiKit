@@ -39,8 +39,6 @@ void NdiReceiveWorker::handleSwitchNdiSource(
   std::string ndi_name = param.toMap()["source_name"].toString().toStdString();
   std::string url_address =
       param.toMap()["source_url"].toString().toStdString();
-  qDebug() << "NdiReceiveWorker::handleSwitchNdiSource" << ndi_name.c_str()
-           << url_address.c_str();
   target_source.p_ndi_name = ndi_name.c_str();
   target_source.p_url_address = url_address.c_str();
   if (m_pNDI_recv) {

@@ -50,7 +50,7 @@ void NdiCpuWorker::handleFindNdiSource(const QNdiManagerCore::NdiGeneralType &ty
         sources.append(source);
     }
     emit answer(type, sources, true, "NDIlib_find_get_current_sources success");
-    QTimer::singleShot(3000, this, [=](){
+    QTimer::singleShot(1000, this, [=](){
         this->handle(QNdiManagerCore::FindNdiSource, QVariant());
     });
 }

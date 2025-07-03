@@ -1,10 +1,10 @@
 #include "ndivieweritem.h"
 #include "ndigeneralcontroller.h"
+#include "qglobal.h"
 #include <QGuiApplication>
 #include <QQuickWindow>
 #include <QSGSimpleTextureNode>
 #include <QSGTexture>
-
 
 namespace QNK {
 namespace Manager {
@@ -41,13 +41,18 @@ NdiViewerItem::NdiViewerItem(QQuickItem *parent)
   setFlag(ItemHasContents, true);
 }
 
-NdiViewerItem::~NdiViewerItem() {}
+NdiViewerItem::~NdiViewerItem() {
+  if (m_texture) {
+    delete m_texture;
+    m_texture = nullptr;
+  }
+}
 
 QSGNode *
 NdiViewerItem::updatePaintNode(QSGNode *oldNode,
                                UpdatePaintNodeData *updatePaintNodeData) {
-  if (!this->isVisible() || m_image.isNull()) {
-    return nullptr; // 如果不可见或没图像，直接返回
+  if (!m_texture) {
+    return oldNode;
   }
 
   QSGSimpleTextureNode *node = static_cast<QSGSimpleTextureNode *>(oldNode);
@@ -55,16 +60,26 @@ NdiViewerItem::updatePaintNode(QSGNode *oldNode,
     node = new QSGSimpleTextureNode();
   }
 
-  // 1. 每次更新时都根据当前图像创建一个新的纹理
-  QSGTexture *texture = window()->createTextureFromImage(m_image);
+  node->setTexture(m_texture);
+  node->setOwnsTexture(false);
 
-  // 2. 把新纹理交给 node
-  node->setTexture(texture);
+  // 更新节点显示的尺寸
+  qreal texture_width = m_texture->textureSize().width();
+  qreal texture_height = m_texture->textureSize().height();
+  qreal ratio = texture_width / texture_height; 
+  if(ratio > 1) {
+    texture_width = this->width();
+    texture_height = texture_width / ratio;
+  } else {
+    texture_height = this->height();
+    texture_width = texture_height * ratio;
+  }
+  node->setRect(QRectF(
+      (this->width() - texture_width) / 2.0,
+      (this->height() - texture_height) / 2.0,
+      texture_width,
+      texture_height));
 
-  // 3. 关键：告诉 node 它拥有这个纹理的生命周期！
-  node->setOwnsTexture(true);
-
-  node->setRect(QRectF(0, 0, width(), height()));
   return node;
 }
 
@@ -74,14 +89,17 @@ void NdiViewerItem::handleAnswer(const QNdiManagerCore::NdiGeneralType &type,
   switch (type) {
   case QNdiManagerCore::NdiGeneralType::NdiSourceData:
     // 1. 获取新图像数据并存起来
-    m_image = param.value<QImage>(); // 假设缩放等已在工作线程完成
-    if (m_image.isNull()) {
-      this->setVisible(false);
-    } else {
-      this->setVisible(true);
-      // 2. 请求刷新，updatePaintNode 会被调用
-      update();
+    if (param.value<QImage>().isNull()) {
+      return;
     }
+    this->setVisible(true);
+    if (m_texture) {
+      m_texture->deleteLater();
+      m_texture = nullptr;
+    }
+    m_texture = window()->createTextureFromImage(param.value<QImage>());
+    m_texture->setFiltering(QSGTexture::Linear);
+    this->update();
     break;
   default:
     break;
