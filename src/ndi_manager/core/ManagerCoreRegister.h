@@ -7,12 +7,12 @@
 
 namespace QNK {
 namespace Manager {
-inline void registerType(QQmlEngine *engine)
+inline void registerCoreType(QQmlEngine *engine)
 {
     QQmlContext *context = engine->rootContext();
     context->setContextProperty("ndiGeneralCtrl", NdiGeneralCtrl);
-
     qRegisterMetaType<QNdiManagerCore::NdiGeneralType>("QNdiManagerCore::NdiGeneralType");
+    qmlRegisterUncreatableType<QNdiManagerCore>("QNK.Manager", 1, 0, "QNkManagerCore", "QNkManagerCore is a singleton type");
 }
 }
 }

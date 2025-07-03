@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import QNK.Manager 1.0
 
 ApplicationWindow {
     id: window
@@ -39,7 +40,7 @@ ApplicationWindow {
 
                     ListView {
                         id: list_view
-
+                        clip: true
                         anchors.fill: parent
                         anchors.margins: 1
                         model: ndiSourceInfoCtrl.model
@@ -48,7 +49,7 @@ ApplicationWindow {
                             color: list_view.currentIndex === index ? "#060606" : mouse_area.containsMouse ? "#060606" : "#121212"
                             height: 40
                             radius: 4
-                            width: parent.width
+                            width: ListView.view.width
 
                             MouseArea {
                                 id: mouse_area
@@ -69,7 +70,7 @@ ApplicationWindow {
                                 }
                                 Text {
                                     color: "white"
-                                    text: model.name
+                                    text: model.source_name
                                 }
                                 Item {
                                     Layout.fillHeight: true
@@ -82,12 +83,29 @@ ApplicationWindow {
                 Item {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 276
+
+                    Flow {
+                        anchors.fill: parent
+                        spacing: 10
+                        Button {
+                            text: "确定"
+                            onClicked: {
+                                var source_info = ndiSourceInfoCtrl.getNdiSourceInfo(list_view.currentIndex);
+                                ndiGeneralCtrl.sendCommand(QNkManagerCore.SwitchNdiSource, source_info);
+                            }
+                        }
+                        
+                    }
                 }
             }
         }
         Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
+            NdiViewerItem {
+                anchors.fill: parent
+                anchors.margins: 10
+            }
         }
     }
 }

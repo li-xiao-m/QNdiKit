@@ -16,8 +16,8 @@ public:
     {
         FindNdiSource,
         SwitchNdiSource,
-        PauseNdiSource,
-        ResumeNdiSource
+        SwitchNdiStatus,
+        NdiSourceData
     };
     Q_ENUM(NdiGeneralType)
 

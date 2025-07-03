@@ -10,10 +10,11 @@ class NdiSourceInfoController : public QObject
     Q_PROPERTY(NdiSourceInfoModel *model MEMBER m_model CONSTANT)
 private:
     explicit NdiSourceInfoController(QObject *parent = nullptr);
-    NdiSourceInfoModel* model() const{return m_model;};
 
 public:
     static NdiSourceInfoController *instance();
+    Q_INVOKABLE QVariantMap getNdiSourceInfo(const int &index);
+    NdiSourceInfoModel* model() const{return m_model;};
 
 signals:
 

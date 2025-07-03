@@ -32,6 +32,7 @@ target_link_libraries(${TARGET_NAME}
         QNdiManagerCore
         NDI::NDI
         Qt${QT_VERSION_MAJOR}::Quick
+        Qt${QT_VERSION_MAJOR}::Gui
 )
 
 # 包含目录

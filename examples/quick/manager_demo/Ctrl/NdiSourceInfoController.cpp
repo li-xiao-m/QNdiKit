@@ -17,7 +17,6 @@ NdiSourceInfoController::NdiSourceInfoController(QObject *parent)
         case QNdiManagerCore::NdiGeneralType::FindNdiSource:
             if (success)
             {
-                qDebug() << "FindNdiSource success" << param.toList();
                 model()->hotUpdate(param.toList());
             }
             break;
@@ -25,6 +24,11 @@ NdiSourceInfoController::NdiSourceInfoController(QObject *parent)
             break;
         }
     });
+}
+
+QVariantMap NdiSourceInfoController::getNdiSourceInfo(const int &index)
+{
+    return model()->getValue(index);
 }
 
 NdiSourceInfoController *NdiSourceInfoController::instance()

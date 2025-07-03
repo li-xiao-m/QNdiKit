@@ -15,6 +15,7 @@ public:
         NameRole
     };
     explicit NdiSourceInfoModel(QObject *parent = nullptr);
+    Q_INVOKABLE QVariantMap getValue(const int &index);
 
 public:
     void hotUpdate(const QVariantList &data);

@@ -1,20 +1,20 @@
-#ifndef NDICPUWORKER_H
-#define NDICPUWORKER_H
+#ifndef NDIRECEIVEWORKER_H
+#define NDIRECEIVEWORKER_H
 
+#include "qchar.h"
 #include "qndimanagercore.h"
 #include "qndimanagercore_global.h"
+#include "qsize.h"
 #include <Processing.NDI.Lib.h>
 #include <QObject>
 #include <QVariant>
 
-
 namespace QNK {
 namespace Manager {
-class QNDIMANAGERCORE_EXPORT NdiCpuWorker : public QObject {
+class QNDIMANAGERCORE_EXPORT NdiReceiveWorker : public QObject {
   Q_OBJECT
 public:
-  explicit NdiCpuWorker(QObject *parent = nullptr);
-  ~NdiCpuWorker();
+  explicit NdiReceiveWorker(QObject *parent = nullptr);
 
 public slots:
   void handle(const QNdiManagerCore::NdiGeneralType &type,
@@ -26,21 +26,17 @@ signals:
               const QString &message);
 
 private:
-  void handleFindNdiSource(const QNdiManagerCore::NdiGeneralType &type,
-                           const QVariant &param);
   void handleSwitchNdiSource(const QNdiManagerCore::NdiGeneralType &type,
                              const QVariant &param);
   void handleSwitchNdiStatus(const QNdiManagerCore::NdiGeneralType &type,
                              const QVariant &param);
-
+  void handleNdiSourceData(const QNdiManagerCore::NdiGeneralType &type,
+                           const QVariant &param);
 private:
-  void initializeNDI();
-
-private:
-  NDIlib_find_instance_t m_pNDI_find{nullptr};
+  NDIlib_recv_instance_t m_pNDI_recv{nullptr};
+  bool m_isPaused{false};
 };
-
 } // namespace Manager
 } // namespace QNK
 
-#endif // NDICPUWORKER_H
+#endif // NDIRECEIVEWORKER_H

@@ -28,11 +28,8 @@ void NdiCpuWorker::handle(const QNdiManagerCore::NdiGeneralType &type, const QVa
         case QNdiManagerCore::NdiGeneralType::SwitchNdiSource:
             handleSwitchNdiSource(type, param);
             break;
-        case QNdiManagerCore::NdiGeneralType::PauseNdiSource:
-            handlePauseNdiSource(type, param);
-            break;
-        case QNdiManagerCore::NdiGeneralType::ResumeNdiSource:
-            handleResumeNdiSource(type, param);
+        case QNdiManagerCore::NdiGeneralType::SwitchNdiStatus:
+            handleSwitchNdiStatus(type, param);
             break;
         default:
             break;
@@ -48,8 +45,8 @@ void NdiCpuWorker::handleFindNdiSource(const QNdiManagerCore::NdiGeneralType &ty
     for(uint32_t i = 0; i < no_sources; i++)
     {
         QVariantMap source;
-        source["name"] = QString::fromUtf8(p_sources[i].p_ndi_name);
-        source["ip_address"] = QString::fromUtf8(p_sources[i].p_ip_address);
+        source["source_name"] = QString::fromUtf8(p_sources[i].p_ndi_name);
+        source["source_url"] = QString::fromUtf8(p_sources[i].p_url_address);
         sources.append(source);
     }
     emit answer(type, sources, true, "NDIlib_find_get_current_sources success");
@@ -63,14 +60,9 @@ void NdiCpuWorker::handleSwitchNdiSource(const QNdiManagerCore::NdiGeneralType &
     emit answer(type, param, true, "switch all ndi sources");
 }
 
-void NdiCpuWorker::handlePauseNdiSource(const QNdiManagerCore::NdiGeneralType &type, const QVariant &param)
+void NdiCpuWorker::handleSwitchNdiStatus(const QNdiManagerCore::NdiGeneralType &type, const QVariant &param)
 {
-    emit answer(type, param, true, "pause all ndi sources");
-}
-
-void NdiCpuWorker::handleResumeNdiSource(const QNdiManagerCore::NdiGeneralType &type, const QVariant &param)
-{
-    emit answer(type, param, true, "resume all ndi sources");
+    emit answer(type, param, true, "switch all ndi sources status");
 }
 
 void NdiCpuWorker::initializeNDI()

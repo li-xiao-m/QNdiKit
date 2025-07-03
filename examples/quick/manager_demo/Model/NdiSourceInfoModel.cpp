@@ -4,6 +4,11 @@ NdiSourceInfoModel::NdiSourceInfoModel(QObject *parent)
     : QAbstractListModel{parent}
 {}
 
+QVariantMap NdiSourceInfoModel::getValue(const int &index)
+{
+    return m_modelData[index].toMap();
+}
+
 void NdiSourceInfoModel::hotUpdate(const QVariantList &data)
 {
     // 增加
@@ -12,7 +17,7 @@ void NdiSourceInfoModel::hotUpdate(const QVariantList &data)
         bool is_exist = false;
         for (size_t j = 0; j < m_modelData.size(); j++)
         {
-            if (data[i].toMap().value("ip_address") == m_modelData[j].toMap().value("ip_address"))
+            if (data[i].toMap().value("source_url") == m_modelData[j].toMap().value("source_url"))
             {
                 is_exist = true;
                 break;
@@ -30,7 +35,7 @@ void NdiSourceInfoModel::hotUpdate(const QVariantList &data)
         bool is_exist = false;
         for (size_t j = 0; j < data.size(); j++)
         {
-            if (m_modelData[i].toMap().value("ip_address") == data[j].toMap().value("ip_address"))
+            if (m_modelData[i].toMap().value("source_url") == data[j].toMap().value("source_url"))
             {
                 is_exist = true;
                 break;
@@ -38,7 +43,7 @@ void NdiSourceInfoModel::hotUpdate(const QVariantList &data)
         }
         if (!is_exist)
         {
-            remove(m_modelData[i].toMap().value("ip_address").toString());
+            remove(m_modelData[i].toMap().value("source_url").toString());
         }
     }
 
@@ -48,9 +53,9 @@ void NdiSourceInfoModel::hotUpdate(const QVariantList &data)
     {
         for (size_t j = 0; j < data.size(); j++)
         {
-            if (m_modelData[i].toMap().value("ip_address") == data[j].toMap().value("ip_address"))
+            if (m_modelData[i].toMap().value("source_url") == data[j].toMap().value("source_url"))
             {
-                update(m_modelData[i].toMap().value("ip_address").toString(), data[j].toMap());
+                update(m_modelData[i].toMap().value("source_url").toString(), data[j].toMap());
             }
         }
     }
@@ -68,7 +73,7 @@ void NdiSourceInfoModel::remove(const QString &key)
 {
     for (int i = 0; i < m_modelData.size(); i++)
     {
-        if (m_modelData[i].toMap().value("ip_address") == key)
+        if (m_modelData[i].toMap().value("source_url") == key)
         {
             beginRemoveRows(QModelIndex(), i, i);
             m_modelData.removeAt(i);
@@ -82,7 +87,7 @@ void NdiSourceInfoModel::update(const QString &key, const QVariantMap &value)
 {
     for (int i = 0; i < m_modelData.size(); i++)
     {
-        if (m_modelData[i].toMap().value("ip_address") == key)
+        if (m_modelData[i].toMap().value("source_url") == key)
         {
             m_modelData[i] = value;
             emit dataChanged(index(i), index(i));
@@ -108,7 +113,7 @@ int NdiSourceInfoModel::rowCount(const QModelIndex &parent) const
 QHash<int, QByteArray> NdiSourceInfoModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[IpAddressRole] = "ip_address";
-    roles[NameRole] = "name";
+    roles[IpAddressRole] = "source_url";
+    roles[NameRole] = "source_name";
     return roles;
 }
