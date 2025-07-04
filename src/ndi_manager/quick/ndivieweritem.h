@@ -2,14 +2,14 @@
 #define NDIVIEWERITEM_H
 
 #include "ndireceiveworker.h"
-#include "qndimanagercore.h"
+#include "QNDI.Manager.Core.h"
 #include "qndimanagerquick_global.h"
 #include <QImage>
 #include <QQuickItem>
 #include <QSGNode>
 #include <QThread>
 #include <QSGTexture>
-
+#include <QImage>
 
 namespace QNK {
 namespace Manager {
@@ -38,7 +38,7 @@ signals:
 private:
   QThread *m_thread{nullptr};
   NdiReceiveWorker *m_worker{nullptr};
-  QSGTexture *m_texture{nullptr};
+  QImage m_image;
 };
 } // namespace Manager
 } // namespace QNK

@@ -91,7 +91,7 @@ ApplicationWindow {
                             text: "确定"
                             onClicked: {
                                 var source_info = ndiSourceInfoCtrl.getNdiSourceInfo(list_view.currentIndex);
-                                ndiGeneralCtrl.sendCommand(QNkManagerCore.SwitchNdiSource, source_info);
+                                ndiGlobalCtrl.sendCommand(QNkManagerCore.SwitchNdiSource, source_info);
                             }
                         }
                         

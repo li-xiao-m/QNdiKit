@@ -7,3 +7,4 @@ endif()
 if(QNdiKit_BUILD_NDI_MANAGER_WIDGETS OR QNdiKit_BUILD_NDI_MANAGER_QUICK)
     add_subdirectory(ndi_manager)
 endif()
+ 

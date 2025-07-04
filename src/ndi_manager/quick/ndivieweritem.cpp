@@ -1,5 +1,5 @@
 #include "ndivieweritem.h"
-#include "ndigeneralcontroller.h"
+#include "QNDI.Manager.GlobalController.h"
 #include "qglobal.h"
 #include <QGuiApplication>
 #include <QQuickWindow>
@@ -11,7 +11,8 @@ namespace Manager {
 NdiViewerItem::NdiViewerItem(QQuickItem *parent)
     : QQuickItem(parent), m_thread(new QThread()),
       m_worker(new NdiReceiveWorker()) {
-  connect(NdiGeneralCtrl, &NdiGeneralController::forwardAnswer, this,
+  qDebug() << "NdiViewerItem" << QThread::currentThreadId();
+  connect(NdiGlobalCtrl, &NdiGlobalController::forwardAnswer, this,
           [=](const QNdiManagerCore::NdiGeneralType &type,
               const QVariant &param, bool isSuccess, const QString &message) {
             switch (type) {
@@ -42,43 +43,41 @@ NdiViewerItem::NdiViewerItem(QQuickItem *parent)
 }
 
 NdiViewerItem::~NdiViewerItem() {
-  if (m_texture) {
-    delete m_texture;
-    m_texture = nullptr;
-  }
 }
 
 QSGNode *
 NdiViewerItem::updatePaintNode(QSGNode *oldNode,
                                UpdatePaintNodeData *updatePaintNodeData) {
-  if (!m_texture) {
-    return oldNode;
-  }
+  QSGSimpleTextureNode *node = dynamic_cast<QSGSimpleTextureNode *>(oldNode);
 
-  QSGSimpleTextureNode *node = static_cast<QSGSimpleTextureNode *>(oldNode);
   if (!node) {
     node = new QSGSimpleTextureNode();
   }
 
-  node->setTexture(m_texture);
-  node->setOwnsTexture(false);
-
-  // 更新节点显示的尺寸
-  qreal texture_width = m_texture->textureSize().width();
-  qreal texture_height = m_texture->textureSize().height();
-  qreal ratio = texture_width / texture_height; 
-  if(ratio > 1) {
-    texture_width = this->width();
-    texture_height = texture_width / ratio;
+  // Calculate the texture area based on the fill mode
+  QRect node_rect = boundingRect().toRect();
+  const double image_ratio = m_image.width() / (double)m_image.height();
+  const double rect_ratio = node_rect.width() / (double)node_rect.height();
+  // If image_ratio > rect_ratio, the image is too narrow for the rect
+  // Adjust height based on width, otherwise adjust width based on height
+  if (image_ratio > rect_ratio) {
+    const int new_height = node_rect.width() / image_ratio;
+    node_rect.setY(node_rect.y() + (node_rect.height() - new_height) / 2);
+    node_rect.setHeight(new_height);
   } else {
-    texture_height = this->height();
-    texture_width = texture_height * ratio;
+    const int new_width = image_ratio * node_rect.height();
+    node_rect.setX(node_rect.x() + (node_rect.width() - new_width) / 2);
+    node_rect.setWidth(new_width);
   }
-  node->setRect(QRectF(
-      (this->width() - texture_width) / 2.0,
-      (this->height() - texture_height) / 2.0,
-      texture_width,
-      texture_height));
+
+  QSGTexture *texture = window()->createTextureFromImage(m_image);
+  texture->setFiltering(QSGTexture::Linear);
+  texture->setMipmapFiltering(QSGTexture::Linear);
+  node->setTexture(texture);
+  node->setOwnsTexture(true);
+  node->setRect(node_rect);
+  node->markDirty(QSGNode::DirtyGeometry);
+  node->markDirty(QSGNode::DirtyMaterial);
 
   return node;
 }
@@ -88,17 +87,12 @@ void NdiViewerItem::handleAnswer(const QNdiManagerCore::NdiGeneralType &type,
                                  const QString &message) {
   switch (type) {
   case QNdiManagerCore::NdiGeneralType::NdiSourceData:
-    // 1. 获取新图像数据并存起来
+    // 1. Obtain new image data and store it
     if (param.value<QImage>().isNull()) {
       return;
     }
+    m_image = param.value<QImage>();
     this->setVisible(true);
-    if (m_texture) {
-      m_texture->deleteLater();
-      m_texture = nullptr;
-    }
-    m_texture = window()->createTextureFromImage(param.value<QImage>());
-    m_texture->setFiltering(QSGTexture::Linear);
     this->update();
     break;
   default:

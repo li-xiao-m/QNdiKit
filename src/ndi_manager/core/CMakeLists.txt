@@ -9,6 +9,7 @@ if(QNdiKit_BUILD_STATIC)
     add_library(${TARGET_NAME} STATIC ${SOURCES} ${HEADERS})
 else()
     find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt5 REQUIRED COMPONENTS Core)
 
     add_library(${TARGET_NAME} SHARED ${SOURCES} ${HEADERS})
 
@@ -16,6 +17,7 @@ target_link_libraries(QNdiManagerCore PRIVATE
     Qt${QT_VERSION_MAJOR}::Core 
     Qt${QT_VERSION_MAJOR}::Gui 
     Qt${QT_VERSION_MAJOR}::Quick)
+target_link_libraries(QNdiManagerCore PRIVATE Qt5::Core)
 endif()
 
 set_target_properties(${TARGET_NAME} PROPERTIES

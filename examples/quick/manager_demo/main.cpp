@@ -4,8 +4,8 @@
 #include <QQmlEngine>
 #include <QtCore/QUrl>
 #include <QtCore/QDir>
-#include "managercoreregister.h"
-#include "quickviewregister.h"
+#include "QNDI.Manager.CoreRegister.h"
+#include "QNDI.Manager.QuickRegister.h"
 #include "Ctrl/CtrlRegister.h"
 
 int main(int argc, char *argv[])

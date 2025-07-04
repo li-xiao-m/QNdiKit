@@ -1,7 +1,7 @@
 #ifndef NDICPUWORKER_H
 #define NDICPUWORKER_H
 
-#include "qndimanagercore.h"
+#include "QNDI.Manager.Core.h"
 #include "qndimanagercore_global.h"
 #include <Processing.NDI.Lib.h>
 #include <QObject>

@@ -1,18 +1,20 @@
-#ifndef QNDIMANAGERCORE_H
-#define QNDIMANAGERCORE_H
+#ifndef QNDI_MANAGER_CORE_H
+#define QNDI_MANAGER_CORE_H
 
-#include <QtCore/QObject>
-#include <QtCore/QStringList>
 #include "qndimanagercore_global.h"
+#include <QObject>
 
 namespace QNK {
 namespace Manager {
 class QNDIMANAGERCORE_EXPORT QNdiManagerCore : public QObject
 {
     Q_OBJECT
+public:
+    explicit QNdiManagerCore(QObject *parent = nullptr);
+    ~QNdiManagerCore();
 
 public:
-    enum NdiGeneralType 
+    enum NdiGeneralType
     {
         FindNdiSource,
         SwitchNdiSource,
@@ -21,14 +23,8 @@ public:
     };
     Q_ENUM(NdiGeneralType)
 
-    QNdiManagerCore();
-    ~QNdiManagerCore();
-
-private:
+signals:
 };
-}
-
-}
-
-
-#endif // QNDIMANAGERCORE_H
+} // namespace Manager
+} // namespace QNK
+#endif // QNDI_MANAGER_CORE_H

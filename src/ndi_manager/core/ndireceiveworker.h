@@ -2,9 +2,8 @@
 #define NDIRECEIVEWORKER_H
 
 #include "qchar.h"
-#include "qndimanagercore.h"
+#include "QNDI.Manager.Core.h"
 #include "qndimanagercore_global.h"
-#include "qsize.h"
 #include <Processing.NDI.Lib.h>
 #include <QObject>
 #include <QVariant>

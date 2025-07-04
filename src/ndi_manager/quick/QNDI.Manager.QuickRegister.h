@@ -1,5 +1,5 @@
-#ifndef QUICKVIEWREGISTER_H
-#define QUICKVIEWREGISTER_H
+#ifndef QNDI_MANAGER_QUICKREGISTER_H
+#define QNDI_MANAGER_QUICKREGISTER_H
 #include <QQmlEngine>
 #include "ndivieweritem.h"
 
@@ -11,4 +11,4 @@ inline void registerQuickType(QQmlEngine *engine)
 }
 }
 }
-#endif // QUICKVIEWREGISTER_H
+#endif // QNDI_MANAGER_QUICKREGISTER_H

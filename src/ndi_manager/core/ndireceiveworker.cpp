@@ -1,10 +1,11 @@
 #include "ndireceiveworker.h"
 #include "Processing.NDI.Recv.h"
-#include "qdebug.h"
 #include <QDebug>
+#include <QGuiApplication>
 #include <QImage>
 #include <QTimer>
-#include <QGuiApplication>
+#include <qglobal.h>
+
 
 namespace QNK {
 namespace Manager {
@@ -71,8 +72,10 @@ void NdiReceiveWorker::handleNdiSourceData(
     NDIlib_video_frame_v2_t p_video_frame;
     NDIlib_recv_capture_v2(m_pNDI_recv, &p_video_frame, nullptr, nullptr, 1000);
     if (p_video_frame.p_data) {
-      QImage frame(p_video_frame.p_data, p_video_frame.xres, p_video_frame.yres,
-                   QImage::Format_ARGB32);
+      QImage frame(
+          p_video_frame.p_data, p_video_frame.xres, p_video_frame.yres,
+          p_video_frame.line_stride_in_bytes, // <- 关键：使用正确的步长
+          QImage::Format_ARGB32_Premultiplied);
       emit answer(type, frame.copy(), true, "Success");
     } else {
       emit answer(type, QImage(), false, "Failed to get NDI source data");
