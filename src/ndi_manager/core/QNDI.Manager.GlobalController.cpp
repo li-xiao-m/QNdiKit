@@ -12,7 +12,6 @@ NdiGlobalController::NdiGlobalController(QObject *parent)
     connect(this, &NdiGlobalController::sendCommand, m_workers, &NdiCpuWorker::handle);
     connect(m_workers, &NdiCpuWorker::answer, this, &NdiGlobalController::handleAnswer);
     connect(qApp, &QCoreApplication::aboutToQuit, this, [=](){
-        qDebug() << "NdiGlobalController aboutToQuit";
         m_thread->quit();
         m_thread->wait();
         delete m_workers;
@@ -33,6 +32,17 @@ void NdiGlobalController::handleAnswer(const QNdiManagerCore::NdiGeneralType &ty
                                         const bool &success,
                                         const QString &message)
 {
+    switch (type) {
+        case QNdiManagerCore::NdiGeneralType::SwitchNdiSource:
+            emit forwardAnswer(type, param.toMap(), success, message);
+            return;
+        case QNdiManagerCore::NdiGeneralType::SwitchNdiStatus:
+            break;
+        case QNdiManagerCore::NdiGeneralType::NdiSourceData:
+            break;
+        default:
+            break;
+    }
     emit forwardAnswer(type, param, success, message);
 }
 } // namespace Manager

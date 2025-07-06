@@ -102,9 +102,27 @@ ApplicationWindow {
         Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            NdiViewerItem {
+
+            GridLayout {
                 anchors.fill: parent
-                anchors.margins: 10
+                columns: 2
+                rows: 2
+                NdiViewerItem {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
+                NdiViewerItem {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
+                NdiViewerItem {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
+                NdiViewerItem {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
             }
         }
     }

@@ -11,7 +11,6 @@ namespace Manager {
 NdiViewerItem::NdiViewerItem(QQuickItem *parent)
     : QQuickItem(parent), m_thread(new QThread()),
       m_worker(new NdiReceiveWorker()) {
-  qDebug() << "NdiViewerItem" << QThread::currentThreadId();
   connect(NdiGlobalCtrl, &NdiGlobalController::forwardAnswer, this,
           [=](const QNdiManagerCore::NdiGeneralType &type,
               const QVariant &param, bool isSuccess, const QString &message) {
