@@ -28,12 +28,14 @@ NdiViewerItem::NdiViewerItem(QQuickItem *parent)
           &NdiReceiveWorker::handle);
   connect(m_worker, &NdiReceiveWorker::answer, this,
           &NdiViewerItem::handleAnswer);
-  connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this,
+  connect(qApp, &QCoreApplication::aboutToQuit, this,
           [=]() {
             m_thread->quit();
             m_thread->wait();
-            m_thread->deleteLater();
-            m_worker->deleteLater();
+            delete m_worker;
+            delete m_thread;
+            m_thread = nullptr;
+            m_worker = nullptr;
           });
 
   m_worker->moveToThread(m_thread);
@@ -42,6 +44,14 @@ NdiViewerItem::NdiViewerItem(QQuickItem *parent)
 }
 
 NdiViewerItem::~NdiViewerItem() {
+  if (m_thread) {
+    m_thread->quit();
+    m_thread->wait();
+    delete m_worker;
+    delete m_thread;
+    m_thread = nullptr;
+    m_worker = nullptr;
+  }
 }
 
 QSGNode *

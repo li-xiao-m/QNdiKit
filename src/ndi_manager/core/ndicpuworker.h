@@ -28,10 +28,6 @@ signals:
 private:
   void handleFindNdiSource(const QNdiManagerCore::NdiGeneralType &type,
                            const QVariant &param);
-  void handleSwitchNdiSource(const QNdiManagerCore::NdiGeneralType &type,
-                             const QVariant &param);
-  void handleSwitchNdiStatus(const QNdiManagerCore::NdiGeneralType &type,
-                             const QVariant &param);
 
 private:
   void initializeNDI();

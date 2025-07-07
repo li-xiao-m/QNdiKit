@@ -5,12 +5,20 @@
 #include <QImage>
 #include <QTimer>
 #include <qglobal.h>
+#include <qobjectdefs.h>
 
 
 namespace QNK {
 namespace Manager {
 NdiReceiveWorker::NdiReceiveWorker(QObject *parent) : QObject{parent} {
   this->handle(QNdiManagerCore::NdiSourceData, QVariant());
+}
+
+NdiReceiveWorker::~NdiReceiveWorker(){
+  if (m_pNDI_recv) {
+    NDIlib_recv_destroy(m_pNDI_recv);
+    m_pNDI_recv = nullptr;
+  }
 }
 
 void NdiReceiveWorker::handle(const QNdiManagerCore::NdiGeneralType &type,

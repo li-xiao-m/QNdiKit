@@ -8,32 +8,22 @@ NdiCpuWorker::NdiCpuWorker(QObject *parent)
     : QObject{parent}
 {
     this->initializeNDI();
-    this->handle(QNdiManagerCore::FindNdiSource, QVariant());
+    this->handleFindNdiSource(QNdiManagerCore::FindNdiSource, QVariant());
 }
 
 NdiCpuWorker::~NdiCpuWorker()
 {
-    qDebug() << "NdiCpuWorker::~NdiCpuWorker";
-    NDIlib_find_destroy(m_pNDI_find);
+    if(m_pNDI_find)
+    {
+        NDIlib_find_destroy(m_pNDI_find);
+        m_pNDI_find = nullptr;
+    }
     NDIlib_destroy();
 }
 
 void NdiCpuWorker::handle(const QNdiManagerCore::NdiGeneralType &type, const QVariant &param)
 {
-    switch(type)
-    {
-        case QNdiManagerCore::NdiGeneralType::FindNdiSource:
-            handleFindNdiSource(type, param);
-            break;
-        case QNdiManagerCore::NdiGeneralType::SwitchNdiSource:
-            handleSwitchNdiSource(type, param);
-            break;
-        case QNdiManagerCore::NdiGeneralType::SwitchNdiStatus:
-            handleSwitchNdiStatus(type, param);
-            break;
-        default:
-            break;
-    }
+    emit answer(type, param, true, "handle");
 }
 
 void NdiCpuWorker::handleFindNdiSource(const QNdiManagerCore::NdiGeneralType &type, const QVariant &param)
@@ -51,18 +41,8 @@ void NdiCpuWorker::handleFindNdiSource(const QNdiManagerCore::NdiGeneralType &ty
     }
     emit answer(type, sources, true, "NDIlib_find_get_current_sources success");
     QTimer::singleShot(1000, this, [=](){
-        this->handle(QNdiManagerCore::FindNdiSource, QVariant());
+        this->handleFindNdiSource(QNdiManagerCore::FindNdiSource, QVariant());
     });
-}
-
-void NdiCpuWorker::handleSwitchNdiSource(const QNdiManagerCore::NdiGeneralType &type, const QVariant &param)
-{
-    emit answer(type, param, true, "switch all ndi sources");
-}
-
-void NdiCpuWorker::handleSwitchNdiStatus(const QNdiManagerCore::NdiGeneralType &type, const QVariant &param)
-{
-    emit answer(type, param, true, "switch all ndi sources status");
 }
 
 void NdiCpuWorker::initializeNDI()

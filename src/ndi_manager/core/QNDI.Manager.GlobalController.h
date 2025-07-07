@@ -16,6 +16,7 @@ private:
 
 public:
   static NdiGlobalController *instance();
+  ~NdiGlobalController();
 
 public slots:
   void handleAnswer(const QNdiManagerCore::NdiGeneralType &type,

@@ -16,9 +16,23 @@ NdiGlobalController::NdiGlobalController(QObject *parent)
         m_thread->wait();
         delete m_workers;
         delete m_thread;
+        m_workers = nullptr;
+        m_thread = nullptr;
     }); 
     m_workers->moveToThread(m_thread);
     m_thread->start();
+}
+
+NdiGlobalController::~NdiGlobalController()
+{
+    if (m_thread) {
+        m_thread->quit();
+        m_thread->wait();
+        delete m_workers;
+        delete m_thread;
+        m_workers = nullptr;
+        m_thread = nullptr;
+    }
 }
 
 NdiGlobalController *NdiGlobalController::instance()

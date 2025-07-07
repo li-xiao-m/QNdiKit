@@ -22,7 +22,6 @@ public:
         NdiSourceData
     };
     Q_ENUM(NdiGeneralType)
-
 signals:
 };
 } // namespace Manager
