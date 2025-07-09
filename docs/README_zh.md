@@ -2,6 +2,12 @@
 
 [English](../README.md)
 
+## 演示视频
+
+![演示视频](e294c9fb98ff87f5481ccc7e53e26736.mp4)
+
+*演示视频展示了QNdiKit的功能和使用效果*
+
 **NDI SDK 下载：** [https://ndi.video/for-developers/ndi-sdk/](https://ndi.video/for-developers/ndi-sdk/)
 
 一个基于 Qt 的模块化 NDI 框架，支持 Windows、Linux、macOS 跨平台高效开发 NDI 源和管理器应用。
