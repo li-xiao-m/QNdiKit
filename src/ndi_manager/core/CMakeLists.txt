@@ -8,23 +8,8 @@ file(GLOB_RECURSE HEADERS "*.h")
 if(QNdiKit_BUILD_STATIC)
     add_library(${TARGET_NAME} STATIC ${SOURCES} ${HEADERS})
 else()
-    find_package(Qt5 REQUIRED COMPONENTS Core)
-find_package(Qt5 REQUIRED COMPONENTS Core)
-
     add_library(${TARGET_NAME} SHARED ${SOURCES} ${HEADERS})
-
-target_link_libraries(QNdiManagerCore PRIVATE 
-    Qt${QT_VERSION_MAJOR}::Core 
-    Qt${QT_VERSION_MAJOR}::Gui 
-    Qt${QT_VERSION_MAJOR}::Quick)
-target_link_libraries(QNdiManagerCore PRIVATE Qt5::Core)
 endif()
-
-set_target_properties(${TARGET_NAME} PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tmp
-    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out
-)
 
 # 设置目标属性
 set_target_properties(${TARGET_NAME} PROPERTIES
@@ -33,6 +18,9 @@ set_target_properties(${TARGET_NAME} PROPERTIES
     OUTPUT_NAME "QNdiManagerCore"
     DEFINE_SYMBOL QNDIMANAGERCORE_EXPORTS
     AUTOMOC ON 
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tmp
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out
 )
 
 # 链接依赖 - 只链接必要的依赖

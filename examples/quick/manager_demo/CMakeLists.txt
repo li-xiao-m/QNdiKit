@@ -24,5 +24,4 @@ set_target_properties(QNdiManagerQuickDemo PROPERTIES
 
 if(QNdiKit_INSTALL)
     install(TARGETS QNdiManagerQuickDemo RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-    install(FILES main.qml DESTINATION ${CMAKE_INSTALL_DATADIR}/QNdiKit/examples/manager_quick)
 endif() 
